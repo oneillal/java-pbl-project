@@ -39,7 +39,7 @@ public class Morra {
 			Round round = new Round(numberOfRounds, false);
 			
 			do {
-				
+				// Start of turn
 				oddsPlayerTurn = Morra.playerTurn();
 				evensPlayerTurn = Morra.playerTurn();
 				
@@ -51,9 +51,10 @@ public class Morra {
 				System.out.println(round.getEvensPlayerScore());
 				System.out.println(round.getOddsPlayerScore());
 				
-			} while (!round.isRoundOver());
+			} while (!round.isRoundOver()); // if nobody has won continue with another turn
 			
-			exit = true;
+			exit = true; // record the details of the round in an Array of Round objects to maintain a history
+			
 			
 		} while (!exit); // loop condition
 		

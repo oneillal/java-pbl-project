@@ -66,7 +66,7 @@ public class Round {
 	
 	public void turn(int oddsPlayerTurn, int evensPlayerTurn) {
 		numberOfTurns++;
-		if(oddsPlayerTurn + evensPlayerTurn % 2 == 0) {
+		if((oddsPlayerTurn + evensPlayerTurn) % 2 == 0) {
 			evensPlayerScore++;
 		}
 		else {
