@@ -1,65 +1,131 @@
-import java.util.Random;
 import java.util.Scanner;
 
 public class Morra {
-	
-	private static final int MIN = 0;
-	private static final int MAX = 10;
-	
-	public static int playerTurn() {
-		Random rn = new Random();;
-		
-		return MIN + rn.nextInt(MAX - MIN + 1);
-	}
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
+
+	public Morra(String player, String computer) {
+	//}
+	//public void play(){
+		NoGenerator randomNo = new NoGenerator();
 		Scanner keyboard = new Scanner(System.in);
 		
-		boolean player, exit, roundOver;
+		boolean exit, roundOver;
 		
-		int numberOfRounds = 0;
+		int round = 0;
 		int roundScore = 0;
 		int oddsPlayerTurn = 0;
 		int evensPlayerTurn = 0;
 		int turn = 0;
+		int compFingers = 0,
+		    gameNo = 0,
+		    yourFingers = 0;
+		//int[] games = new games[10];
+		//ArrayList games = new ArrayList();
+		String youPlayAs = player,
+		       compPlayAs = computer,
+		       roundResult;
 
-		System.out.println("Welcome to Morra Odds and Evens!");
 
-		System.out.println("Choose ODDS [0] or EVENS [1]. Enter your choice [0 or 1]: ");
-		player = Boolean.valueOf(keyboard.nextLine());
-		
+
 		exit = false;
 		
 		do {
 			roundScore = 0;
-			System.out.println("Starting round " + ++numberOfRounds);
 			
-			Round round = new Round(numberOfRounds, false);
+			Game game = new Game(youPlayAs, gameNo++);
+
+			//Round round = new Round(numberOfRounds, false);
 			
 			do {
 				// Start of turn
-				oddsPlayerTurn = Morra.playerTurn();
-				evensPlayerTurn = Morra.playerTurn();
+				//oddsPlayerTurn = Morra.playerTurn();
+				//oddsPlayerTurn = randomNo.gen();
+				//evensPlayerTurn = Morra.playerTurn();
+				//evensPlayerTurn = randomNo.gen();
+				round++;
+				System.out.println("\n######## STARTING ROUND " + round + " ########");
+	
+				System.out.println("\nHow many fingers will you show? [1-10]");
+				yourFingers = keyboard.nextInt();
 				
-				System.out.println("Even player rolled a " + evensPlayerTurn);
-				System.out.println("Odd player rolled a " + oddsPlayerTurn + "\n");
+				System.out.println("\nYou[" + youPlayAs  + "]: " + yourFingers);
+
+				compFingers = randomNo.gen();
+				//compFingers = keyboard.nextInt();
+
+				System.out.println("Computer[" + compPlayAs  + "]: " + compFingers);
 				
-				round.turn(oddsPlayerTurn, evensPlayerTurn);
+				game.turn(yourFingers, compFingers);
 				
-				System.out.println(round.getEvensPlayerScore());
-				System.out.println(round.getOddsPlayerScore());
+				if(game.getRoundWinner() == youPlayAs)
+					//roundResult = "WON";
+					System.out.println("\n**YOU** have WON round " + round + "\n");
+				//else if(game.getRoundWinner() == compPlayAs)
+				else
+					//roundResult = "LOST";
+					System.out.println("\nThe **COMPUTER** has WON round " + round + "\n");
+
+				//System.out.println("\nYou've **" + roundResult  + "** round " + round + "\n");
+				System.out.println("Points summary for round " + round + ":");
+				System.out.println("You: " + game.getRoundStats("player"));
+				System.out.println("Computer: " + game.getRoundStats("computer") + "\n");
 				
-			} while (!round.isRoundOver()); // if nobody has won continue with another turn
+				if(game.isGameDraw())
+					System.out.println("It's a DRAW - One more round!\n");
+
+			} while (!game.isGameOver()); // if nobody has won continue with another turn
 			
+			System.out.println("\n\t##########################");
+			System.out.println("\tThe WINNER of the game is: " + game.getGameWinner());
+			System.out.println("\t##########################\n\n");
 			exit = true; // record the details of the round in an Array of Round objects to maintain a history
-			
-			
+
 		} while (!exit); // loop condition
 		
 		System.out.println("Printing game history...");	
 		System.out.println("Exiting game...");
-	}
 
+	}
+	public static void main(String[] args) {
+		
+		Scanner keyboard = new Scanner(System.in);
+
+		System.out.println("\n\t********************************************");
+		System.out.println("\t***** Welcome to Morra Odds and Evens! *****");
+		System.out.println("\t********************************************\n");
+
+		int userChoice = 0;
+		String youPlayAs,
+		       compPlayAs;
+
+		while(userChoice != 2){
+		System.out.println("Choose EVENS [0] or ODDS [1]. Enter your choice [0 or 1]: (2 to exit)");
+		userChoice = keyboard.nextInt();
+		//userChoice = Morra.Play();
+			switch(userChoice){
+				case 0:
+					System.out.println("You've chosen EVENS!");
+					youPlayAs = "EVENS";
+					compPlayAs = "ODDS";
+					//morra.play();
+					Morra morraEvens = new Morra(youPlayAs,compPlayAs);
+					break;
+				case 1:
+					System.out.println("You've chosen ODDS!");
+					youPlayAs = "ODDS";
+					compPlayAs = "EVENS";
+					//morra.play();
+					Morra morraOdds = new Morra(youPlayAs,compPlayAs);
+					break;
+				case 2:
+					System.out.println("Exiting...");
+					//System.exit(0);
+					break;
+				default:
+					break;
+			}
+			
+		}
+	}
 }
