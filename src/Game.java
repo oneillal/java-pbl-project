@@ -9,11 +9,19 @@ public class Game {
 	boolean gameOver,
 		gameDraw = false;
 	String playAs;
-	//int[] fingers = new int[10];
+	int[] pFingers = new int[20],
+	      cFingers   = new int[20];
 	int fingers;
-	int gameNumber;
-	String roundWinner,
-	       gameWinner;
+	int gameNumber,
+	    pBonusPoints,
+	    cBonusPoints,
+	    computerNoEven,
+	    playerNoEven,
+	    computerNoOdd,
+	    playerNoOdd,
+	    roundWonByPlayer;
+	String[] roundWinner = new String[10];
+	String gameWinner;
 	
 	public Game(String playerChoice, int gameNo) {
 		this.roundNumber = 0;
@@ -24,8 +32,11 @@ public class Game {
 		this.computerScore = 0;
 		this.oddsPlayerBonusPts = 0;
 		this.evensPlayerBonusPts = 0;
-		this.fingers = 0;
+		this.pFingers[0] = 0;
+		this.cFingers[0] = 0;
 		this.gameNumber = gameNo;
+		this.pBonusPoints = 0;
+		this.roundWonByPlayer = 0;
 	}
 
 	public boolean isGameOver() {
@@ -44,14 +55,36 @@ public class Game {
 		this.roundNumber = roundNumber;
 	}
 
-	public int getFingers(int roundNumber) {
-		//return fingers[roundNumber];
-		return fingers;
+	public int getPlayerFingers(int roundNumber) {
+		return pFingers[roundNumber-1];
 	}
 
-	public void setFingers(int fingers, int roundNumber) {
-		//this.fingers[roundNumber] = fingers;
-		this.fingers = fingers;
+	public void setPlayerFingers(int fingers, int roundNumber) {
+		this.pFingers[roundNumber-1] = fingers;
+	}
+
+	public int getPlayerBonusPoints(int roundNumber) {
+		return pBonusPoints;
+	}
+
+	public void setPlayerBonusPoints(int bonusPoint) {
+		this.pBonusPoints = bonusPoint;
+	}
+
+	public int getCompBonusPoints() {
+		return cBonusPoints;
+	}
+
+	public void setCompBonusPoints(int bonusPoint) {
+		this.cBonusPoints = bonusPoint;
+	}
+
+	public int getCompFingers(int roundNumber) {
+		return cFingers[roundNumber-1];
+	}
+
+	public void setCompFingers(int fingers, int roundNumber) {
+		this.cFingers[roundNumber-1] = fingers;
 	}
 
 	public int getNumberOfTurns() {
@@ -102,16 +135,60 @@ public class Game {
 		this.gameWinner = gameWinner;
 	}
 
-	public String getRoundWinner() {
-		return roundWinner;
+	public String getRoundWinner(int round) {
+		return roundWinner[round-1];
 	}
 
-	public void setRoundWinner(String roundWinner) {
-		this.roundWinner = roundWinner;
+	public void setRoundWinner(String roundWinner, int round) {
+		this.roundWinner[round-1] = roundWinner;
+	}
+
+	public int getNumberRoundsWonByPlayer() {
+		return roundWonByPlayer;
+	}
+
+	public void setNumberRoundsWonByPlayer(int roundWonByPlayer) {
+		this.roundWonByPlayer = roundWonByPlayer;
 	}
 
 	public int getEvensPlayerBonusPts() {
 		return evensPlayerBonusPts;
+	}
+
+	public int getPlayerNumberOfEven() {
+		return playerNoEven;
+	}
+
+	public void setPlayerNumberOfEven(int playerNoEven) {
+		this.playerNoEven = playerNoEven;
+	}
+
+	public int getPlayerNumberOfOdd() {
+		return playerNoOdd;
+	}
+
+	public void setPlayerNumberOfOdd(int playerNoOdd) {
+		this.playerNoOdd = playerNoOdd;
+	}
+
+	public int getCompNumberOfEven() {
+		return computerNoEven;
+	}
+
+	public void setCompNumberOfEven(int computerNoEven) {
+		this.computerNoEven = computerNoEven;
+	}
+
+	public int getCompNumberOfOdd() {
+		return computerNoOdd;
+	}
+
+	public void setCompNumberOfOdd(int computerNoOdd) {
+		this.computerNoOdd = computerNoOdd;
+	}
+
+	public void setGameWinner(int playerNoEven) {
+		this.playerNoEven = playerNoEven;
 	}
 
 	public int getRoundStats(String player) {
@@ -125,57 +202,65 @@ public class Game {
 		this.evensPlayerBonusPts = evensPlayerBonusPts;
 	}
 
-	public void turn(int playerFingers, int compFingers) {
+	public void turn(int playerFingers, int compFingers, int round) {
+
+		// Number of rounds played
 		numberOfTurns++;
+
+		// account for the number of fingers shown per round, per user
+		pFingers[round-1] = playerFingers;
+		cFingers[round-1] = compFingers;
 
 		// EVENS result
 		if((playerFingers + compFingers) % 2 == 0) {
 			if(playAs == "EVENS"){
-				//System.out.println("-----EVENS----player +2");
-				playerScore += 2;}
+				playerScore += 2;
+				playerNoEven++;
+			}
 			else{
-				//System.out.println("-----EVENS----comp +2");
-				computerScore += 2;}
-			//System.out.println("EVENS won round " + roundNumber);
-			roundWinner = "EVENS";
+				computerScore += 2;
+				computerNoEven++;
+			}
+			roundWinner[round-1] = "EVENS";
 		}
 		// ODDS result
 		else {
 			if(playAs == "ODDS"){
-				//System.out.println("------ODDS---player +2");
-				playerScore += 2;}
+				playerScore += 2;
+				playerNoOdd++;
+			}
 			else{
-				//System.out.println("-----ODDS----comp +2");
-				computerScore += 2;}
-			//playerScore += 2;
-			roundWinner = "ODDS";
-			//System.out.println("ODDS won round " + roundNumber);
+				computerScore += 2;
+				computerNoOdd++;
+			}
+			roundWinner[round-1] = "ODDS";
 		}
-		//System.out.println("COMP FINGERS: " + compFingers);	
+
 		// Bonus point for both if the same number of fingers
 		if(playerFingers == compFingers) {
-			//System.out.println("BOTH++");
 			computerScore++;
 			playerScore++;
 			System.out.println("\nYou got 1 extra point!");
 			System.out.println("The computer got 1 extra point!");
+			pBonusPoints++;
+			cBonusPoints++;
 		}
-		// Bonus point for EVENS if it showed more fingers
+		// Bonus point for Computer if it showed more fingers
 		else if(compFingers > playerFingers){
-			//System.out.println("COMPUTER++");
 			computerScore++;
 			System.out.println("\nThe computer got 1 extra point!");
+			cBonusPoints++;
 		}
-		// Bonus point for ODDS if it showed more fingers
+		// Bonus point for Player if it showed more fingers
 		else if(playerFingers > compFingers) {
-			//System.out.println("PLAYER++");
 			playerScore++;
 			System.out.println("\nYou got 1 extra point!");
+			pBonusPoints++;
 		}
 
 		// if score is 6 or higher, set boolean to true to end game
 		if(playerScore >= 6 || computerScore >= 6) {
-			//gameOver = true;
+
 			// set who the winner of the game is
 			if(playerScore > computerScore) {
 				gameWinner = "YOU";
@@ -185,8 +270,9 @@ public class Game {
 				gameWinner = "COMPUTER";
 				gameDraw = false;
 				gameOver = true;
-			} else {
-				//System.out.println("It's a DRAW - One more round!");
+			} 
+			// It's a DRAW - One more round
+			else {
 				gameDraw = true;
 			}
 		}
