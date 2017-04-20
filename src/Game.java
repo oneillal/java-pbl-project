@@ -19,11 +19,12 @@ public class Game {
 	    playerNoEven,
 	    computerNoOdd,
 	    playerNoOdd,
-	    roundWonByPlayer;
+	    roundWonByPlayer,
+	    roundWonByComputer;
 	String[] roundWinner = new String[10];
 	String gameWinner;
 	
-	public Game(String playerChoice, int gameNo) {
+	public Game(String playerChoice) {
 		this.roundNumber = 0;
 		this.playAs = playerChoice;
 		this.gameOver = false;
@@ -34,11 +35,15 @@ public class Game {
 		this.evensPlayerBonusPts = 0;
 		this.pFingers[0] = 0;
 		this.cFingers[0] = 0;
-		this.gameNumber = gameNo;
 		this.pBonusPoints = 0;
 		this.roundWonByPlayer = 0;
+		this.playerNoEven = 0;
+		this.playerNoOdd = 0;
+		this.computerNoEven = 0;
+		this.computerNoOdd = 0;
 	}
 
+	// check if game has ended
 	public boolean isGameOver() {
 		return gameOver;
 	}
@@ -63,7 +68,7 @@ public class Game {
 		this.pFingers[roundNumber-1] = fingers;
 	}
 
-	public int getPlayerBonusPoints(int roundNumber) {
+	public int getPlayerBonusPoints() {
 		return pBonusPoints;
 	}
 
@@ -147,8 +152,16 @@ public class Game {
 		return roundWonByPlayer;
 	}
 
-	public void setNumberRoundsWonByPlayer(int roundWonByPlayer) {
-		this.roundWonByPlayer = roundWonByPlayer;
+	public void setNumberRoundsWonByPlayer() {
+		this.roundWonByPlayer++;
+	}
+
+	public int getNumberRoundsWonByComputer() {
+		return roundWonByComputer;
+	}
+
+	public void setNumberRoundsWonByComputer() {
+		this.roundWonByComputer++;
 	}
 
 	public int getEvensPlayerBonusPts() {
@@ -187,10 +200,7 @@ public class Game {
 		this.computerNoOdd = computerNoOdd;
 	}
 
-	public void setGameWinner(int playerNoEven) {
-		this.playerNoEven = playerNoEven;
-	}
-
+	// gets score for player and computer
 	public int getRoundStats(String player) {
                 if(player == "player")
 			return getPlayerScore();
@@ -202,6 +212,7 @@ public class Game {
 		this.evensPlayerBonusPts = evensPlayerBonusPts;
 	}
 
+	// method to compute each round's stats
 	public void turn(int playerFingers, int compFingers, int round) {
 
 		// Number of rounds played
@@ -213,28 +224,38 @@ public class Game {
 
 		// EVENS result
 		if((playerFingers + compFingers) % 2 == 0) {
-			if(playAs == "EVENS"){
+			// check if player is EVENS, if it is then the player gets the points
+			if(playAs == "EVENS")
 				playerScore += 2;
-				playerNoEven++;
-			}
-			else{
+			else
 				computerScore += 2;
-				computerNoEven++;
-			}
+
 			roundWinner[round-1] = "EVENS";
 		}
 		// ODDS result
 		else {
-			if(playAs == "ODDS"){
+			// check if player is ODDS, if it is then the player gets the points
+			if(playAs == "ODDS")
 				playerScore += 2;
-				playerNoOdd++;
-			}
-			else{
+			else
 				computerScore += 2;
-				computerNoOdd++;
-			}
+
 			roundWinner[round-1] = "ODDS";
 		}
+
+		// check the number of fingers shwon by the player is an even number
+		if(playerFingers % 2 == 0)
+			playerNoEven++;
+		// if not then it's an odd number of fingers
+		else
+			playerNoOdd++;
+
+		// check the number of fingers shwon by the computer is an even number
+		if(compFingers % 2 == 0)
+			computerNoEven++;
+		// if not then it's an odd number of fingers
+		else
+			computerNoOdd++;
 
 		// Bonus point for both if the same number of fingers
 		if(playerFingers == compFingers) {
