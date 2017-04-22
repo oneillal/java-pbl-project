@@ -1,139 +1,99 @@
+
+// Main class that interacts with the user when initiating the game
+
+/*
+	JAVA PROJECT - CYBERSECURITY - 2017
+
+	Group Members:
+	Alan O'Neill - 16134427
+	Jonas Stein  - 16136306
+	Mark Hanlon  - 16135571
+
+*/
+
+// input from user 
 import java.util.Scanner;
 
 public class MorraApp {
 
-	String youPlayAs,
-	       compPlayAs;
-
-	boolean exit;
-
-	int round = 0,
-	    turn = 0,
-	    compFingers = 0,
-	    yourFingers = 0,
-	    numberRoundsWonByPlayer,
-	    numberRoundsWonByComputer,
-	    playerNumberOfEven,
-	    playerNumberOfOdd,
-	    compNumberOfEven,
-	    compNumberOfOdd,
-	    playerBonusPoints,
-	    compBonusPoints;
-
-	public MorraApp(String player, String computer) {
-
-		this.exit = false;
-
-		this.round = 0;
-		this.turn = 0;
-		this.compFingers = 0;
-		this.yourFingers = 0;
-		this.numberRoundsWonByPlayer = 0;
-	    	this.numberRoundsWonByComputer = 0;
-	    	this.playerNumberOfEven = 0;
-	    	this.playerNumberOfOdd = 0;
-	    	this.compNumberOfEven = 0;
-	    	this.compNumberOfOdd = 0;
-	    	this.playerBonusPoints = 0;
-	    	this.compBonusPoints = 0;
-
-		this.youPlayAs  = player;
-		this.compPlayAs = computer;
-		// generates random numbers
-		//NoGenerator randomNo = new NoGenerator();
-
-		// user input
-		//Scanner keyboard = new Scanner(System.in);
-
-		// create object game
-		//Game game = new Game(youPlayAs);
-
-		//exit = false;
-	}
-
-	public void play(){//String player, String computer) {
-
-		/*String youPlayAs  = player,
-		       compPlayAs = computer;
-
-		boolean exit;
-
-		int round = 0,
-		    turn = 0,
-		    compFingers = 0,
-		    yourFingers = 0;
-
-		exit = false; */
-
-		// generates random numbers
-		NoGenerator randomNo = new NoGenerator();
-
-		// user input
+	public static void main(String[] args) {
+		
+		// get input from users
 		Scanner keyboard = new Scanner(System.in);
 
-		// create object game
-		Game game = new Game(youPlayAs);
+		// Creates an array of Morra objects. Up to five games is allowed per run
+		Morra[] morra = new Morra[5];
+		
+		System.out.println("\n\t********************************************");
+		System.out.println("\t***** Welcome to Morra Odds and Evens! *****");
+		System.out.println("\t********************************************\n");
 
-		do {
-			do {
-				round++;
+		// userChoice => 0 = EVENS; 1 = ODDS; 2 = EXIT;
+		int userChoice = 0,
+		// used in the morra array
+		    count      = 0;
+		
+		// to set who the player and computer will play as
+		String youPlayAs,
+		       compPlayAs;
 
-				System.out.println("\n######## STARTING ROUND " + round + " ########");
+		// will loop until user inputs 2
+		while(userChoice != 2){
 
-				System.out.println("\nHow many fingers will you show? [1-10]");
-				yourFingers = keyboard.nextInt();
-
-				System.out.println("\nYou[" + youPlayAs  + "]: " + yourFingers);
-
-				compFingers = randomNo.gen();
-
-				System.out.println("Computer[" + compPlayAs  + "]: " + compFingers);
-
-				game.turn(yourFingers, compFingers, round);
-
-				if(game.getRoundWinner(round) == youPlayAs) {
-					System.out.println("\n**YOU** have WON round " + round + "\n");
-					game.setNumberRoundsWonByPlayer();
-				}
-				else {
-					System.out.println("\nThe **COMPUTER** has WON round " + round + "\n");
-					game.setNumberRoundsWonByComputer();
-				}
-				System.out.println("Points summary - round " + round + ":");
-				System.out.println("You: " + game.getRoundStats("player"));
-				System.out.println("Computer: " + game.getRoundStats("computer") + "\n");
-
-				if(game.isGameDraw())
-					System.out.println("It's a DRAW - One more round!\n");
-
-			} while (!game.isGameOver()); // if nobody has won continue with another round
-
-			System.out.println("\n\t##########################");
-			System.out.println("\tThe WINNER of the game is: " + game.getGameWinner());
-			System.out.println("\t##########################\n\n");
-
-			System.out.println("\t++++++ Fingers Statistics +++++++");
-			for(int i=1; i<=round; i++) {
-				System.out.println("# Round " + i);
-				System.out.println("You: " + game.getPlayerFingers(i));
-				System.out.println("Computer: " + game.getCompFingers(i) + "\n");
+			System.out.println("Choose EVENS [0] or ODDS [1]. Enter your choice [0 or 1]: (2 to exit)");
+			userChoice = keyboard.nextInt();
+			switch(userChoice){
+				case 0:
+					System.out.println("You've chosen EVENS!");
+					youPlayAs = "EVENS";
+					compPlayAs = "ODDS";
+					// instantiates Morra class
+					morra[count] = new Morra(youPlayAs,compPlayAs);
+					morra[count].play();
+					count++;
+					break;
+				case 1:
+					System.out.println("You've chosen ODDS!");
+					youPlayAs = "ODDS";
+					compPlayAs = "EVENS";
+					// instantiates Morra class
+					morra[count] = new Morra(youPlayAs,compPlayAs);
+					morra[count].play();
+					count++;
+					break;
+				case 2:
+					// EXIT the loop
+					System.out.println("Exiting...");
+					break;
+				default:
+					break;
 			}
-			System.out.println("++++++++++++++++++++++++++++++");
-			exit = true; // record the details of the round in an Array of Round objects to maintain a history
+		}
 
-		} while (!exit); // loop condition
 
-		//System.out.println("Printing game history...");
-		this.numberRoundsWonByPlayer = game.getNumberRoundsWonByPlayer();
-	    	this.numberRoundsWonByComputer = game.getNumberRoundsWonByComputer();
-	    	this.playerNumberOfEven = game.getPlayerNumberOfEven();
-	    	this.playerNumberOfOdd = game.getPlayerNumberOfOdd();
-	    	this.compNumberOfEven = game.getCompNumberOfEven();
-	    	this.compNumberOfOdd = game.getCompNumberOfOdd();
-	    	this.playerBonusPoints = game.getPlayerBonusPoints();
-	    	this.compBonusPoints = game.getCompBonusPoints();
+		// Print statistics of each game
+		for(int i = 0; i < count; i++) {
+			System.out.println(">>>> Game number " + (i+1) + " <<<<");
 
-		//System.out.println("Exiting game...");
+			// Number of rounds won by player and computer
+			System.out.println("\nNumber of rounds won by you: " + morra[i].numberRoundsWonByPlayer);
+			System.out.println("Number of rounds won by the computer: " + morra[i].numberRoundsWonByComputer);
+			
+			// Number of Even numbers shown by player
+			System.out.println("\nNumber of Even numbers shown by you: " + morra[i].playerNumberOfEven);
+			System.out.println("Number of Odds numbers shown by you: " + morra[i].playerNumberOfOdd);
 
+			// Number of Even numbers shown by the computer
+			System.out.println("\nNumber of Even numbers shown by the computer: " + morra[i].compNumberOfEven);
+			System.out.println("Number of Odds numbers shown by the computer: " + morra[i].compNumberOfOdd);
+
+			// Number of Bonus points the player and computer received
+			System.out.println("\nNumber of Bonus points you received: " + morra[i].playerBonusPoints);
+			System.out.println("Number of Bonus points the computer received: " + morra[i].compBonusPoints);
+			
+			System.out.println("\n");
+		}
+	// close main
 	}
+// close MorraApp
 }

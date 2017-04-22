@@ -1,11 +1,11 @@
+// instantiable class that implements Player and Computer game stats and features
+
 
 public class Game {
 	int roundNumber;
 	int numberOfTurns;
 	int playerScore;
 	int computerScore;
-	int oddsPlayerBonusPts;
-	int evensPlayerBonusPts;
 	boolean gameOver,
 		gameDraw = false;
 	String playAs;
@@ -24,6 +24,8 @@ public class Game {
 	String[] roundWinner = new String[10];
 	String gameWinner;
 	
+	// Instantiate the class setting the following values
+	// PlayerChoice is either EVENS or ODDS
 	public Game(String playerChoice) {
 		this.roundNumber = 0;
 		this.playAs = playerChoice;
@@ -31,8 +33,6 @@ public class Game {
 		this.numberOfTurns = 0;
 		this.playerScore = 0;
 		this.computerScore = 0;
-		this.oddsPlayerBonusPts = 0;
-		this.evensPlayerBonusPts = 0;
 		this.pFingers[0] = 0;
 		this.cFingers[0] = 0;
 		this.pBonusPoints = 0;
@@ -43,47 +43,29 @@ public class Game {
 		this.computerNoOdd = 0;
 	}
 
-	// check if game has ended
+	// tracks if game has ended
 	public boolean isGameOver() {
 		return gameOver;
 	}
-
 	public void setGameOver(boolean gameOver) {
 		this.gameOver = gameOver;
 	}
 
+	// tracks the round number
 	public int getRoundNumber() {
 		return roundNumber;
 	}
-
 	public void setRoundNumber(int roundNumber) {
 		this.roundNumber = roundNumber;
 	}
 
+	// tracks how many fingers were shown by player and computer each round
 	public int getPlayerFingers(int roundNumber) {
 		return pFingers[roundNumber-1];
 	}
-
 	public void setPlayerFingers(int fingers, int roundNumber) {
 		this.pFingers[roundNumber-1] = fingers;
 	}
-
-	public int getPlayerBonusPoints() {
-		return pBonusPoints;
-	}
-
-	public void setPlayerBonusPoints(int bonusPoint) {
-		this.pBonusPoints = bonusPoint;
-	}
-
-	public int getCompBonusPoints() {
-		return cBonusPoints;
-	}
-
-	public void setCompBonusPoints(int bonusPoint) {
-		this.cBonusPoints = bonusPoint;
-	}
-
 	public int getCompFingers(int roundNumber) {
 		return cFingers[roundNumber-1];
 	}
@@ -92,110 +74,102 @@ public class Game {
 		this.cFingers[roundNumber-1] = fingers;
 	}
 
+	// tracks bonus points received by each player
+	public int getPlayerBonusPoints() {
+		return pBonusPoints;
+	}
+	public void setPlayerBonusPoints(int bonusPoint) {
+		this.pBonusPoints = bonusPoint;
+	}
+	public int getCompBonusPoints() {
+		return cBonusPoints;
+	}
+	public void setCompBonusPoints(int bonusPoint) {
+		this.cBonusPoints = bonusPoint;
+	}
+
+	// number of rounds played
 	public int getNumberOfTurns() {
 		return numberOfTurns;
 	}
-
 	public void setNumberOfTurns(int numberOfTurns) {
 		this.numberOfTurns = numberOfTurns;
 	}
 
+	// scores for each player
 	public int getPlayerScore() {
 		return playerScore;
 	}
-
 	public void setPlayerScore(int playerScore) {
 		this.playerScore = playerScore;
 	}
-
 	public int getComputerScore() {
 		return computerScore;
 	}
-
 	public void setComputerScore(int computerScore) {
 		this.computerScore = computerScore;
 	}
 
-	public int getOddsPlayerBonusPts() {
-		return oddsPlayerBonusPts;
-	}
-
-	public void setOddsPlayerBonusPts(int oddsPlayerBonusPts) {
-		this.oddsPlayerBonusPts = oddsPlayerBonusPts;
-	}
-
+	// tracks if game is draw
 	public boolean isGameDraw() {
 		return gameDraw;
 	}
-
 	public void setisGameDraw(boolean gameDraw) {
 		this.gameDraw = gameDraw;
 	}
 
+	// tracks the game winner
 	public String getGameWinner() {
 		return gameWinner;
 	}
-
 	public void setGameWinner(String gameWinner) {
 		this.gameWinner = gameWinner;
 	}
 
+	// tracks the round winner
 	public String getRoundWinner(int round) {
 		return roundWinner[round-1];
 	}
-
 	public void setRoundWinner(String roundWinner, int round) {
 		this.roundWinner[round-1] = roundWinner;
 	}
 
+	// number of rounds won by player and computer
 	public int getNumberRoundsWonByPlayer() {
 		return roundWonByPlayer;
 	}
-
 	public void setNumberRoundsWonByPlayer() {
 		this.roundWonByPlayer++;
 	}
-
 	public int getNumberRoundsWonByComputer() {
 		return roundWonByComputer;
 	}
-
 	public void setNumberRoundsWonByComputer() {
 		this.roundWonByComputer++;
 	}
 
-	public int getEvensPlayerBonusPts() {
-		return evensPlayerBonusPts;
-	}
-
+	// tracks the number of even and odd fingers shown by player and computer
 	public int getPlayerNumberOfEven() {
 		return playerNoEven;
 	}
-
 	public void setPlayerNumberOfEven(int playerNoEven) {
 		this.playerNoEven = playerNoEven;
 	}
-
 	public int getPlayerNumberOfOdd() {
 		return playerNoOdd;
 	}
-
 	public void setPlayerNumberOfOdd(int playerNoOdd) {
 		this.playerNoOdd = playerNoOdd;
 	}
-
 	public int getCompNumberOfEven() {
 		return computerNoEven;
 	}
-
 	public void setCompNumberOfEven(int computerNoEven) {
 		this.computerNoEven = computerNoEven;
 	}
-
 	public int getCompNumberOfOdd() {
 		return computerNoOdd;
 	}
-
 	public void setCompNumberOfOdd(int computerNoOdd) {
 		this.computerNoOdd = computerNoOdd;
 	}
@@ -208,9 +182,6 @@ public class Game {
 			return getComputerScore();
         }
 
-	public void setEvensPlayerBonusPts(int evensPlayerBonusPts) {
-		this.evensPlayerBonusPts = evensPlayerBonusPts;
-	}
 
 	// method to compute each round's stats
 	public void turn(int playerFingers, int compFingers, int round) {
