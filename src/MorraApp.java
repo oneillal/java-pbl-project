@@ -6,7 +6,7 @@ public class MorraApp {
 	       compPlayAs;
 
 	boolean exit;
-		
+
 	int round = 0,
 	    turn = 0,
 	    compFingers = 0,
@@ -19,11 +19,11 @@ public class MorraApp {
 	    compNumberOfOdd,
 	    playerBonusPoints,
 	    compBonusPoints;
-	
+
 	public MorraApp(String player, String computer) {
 
 		this.exit = false;
-		
+
 		this.round = 0;
 		this.turn = 0;
 		this.compFingers = 0;
@@ -52,12 +52,12 @@ public class MorraApp {
 	}
 
 	public void play(){//String player, String computer) {
-		
+
 		/*String youPlayAs  = player,
 		       compPlayAs = computer;
 
 		boolean exit;
-		
+
 		int round = 0,
 		    turn = 0,
 		    compFingers = 0,
@@ -79,18 +79,18 @@ public class MorraApp {
 				round++;
 
 				System.out.println("\n######## STARTING ROUND " + round + " ########");
-	
+
 				System.out.println("\nHow many fingers will you show? [1-10]");
 				yourFingers = keyboard.nextInt();
-				
+
 				System.out.println("\nYou[" + youPlayAs  + "]: " + yourFingers);
 
 				compFingers = randomNo.gen();
 
 				System.out.println("Computer[" + compPlayAs  + "]: " + compFingers);
-				
+
 				game.turn(yourFingers, compFingers, round);
-				
+
 				if(game.getRoundWinner(round) == youPlayAs) {
 					System.out.println("\n**YOU** have WON round " + round + "\n");
 					game.setNumberRoundsWonByPlayer();
@@ -99,15 +99,15 @@ public class MorraApp {
 					System.out.println("\nThe **COMPUTER** has WON round " + round + "\n");
 					game.setNumberRoundsWonByComputer();
 				}
-				System.out.println("Points summary for round " + round + ":");
+				System.out.println("Points summary - round " + round + ":");
 				System.out.println("You: " + game.getRoundStats("player"));
 				System.out.println("Computer: " + game.getRoundStats("computer") + "\n");
-				
+
 				if(game.isGameDraw())
 					System.out.println("It's a DRAW - One more round!\n");
 
 			} while (!game.isGameOver()); // if nobody has won continue with another round
-			
+
 			System.out.println("\n\t##########################");
 			System.out.println("\tThe WINNER of the game is: " + game.getGameWinner());
 			System.out.println("\t##########################\n\n");
@@ -122,7 +122,7 @@ public class MorraApp {
 			exit = true; // record the details of the round in an Array of Round objects to maintain a history
 
 		} while (!exit); // loop condition
-		
+
 		//System.out.println("Printing game history...");
 		this.numberRoundsWonByPlayer = game.getNumberRoundsWonByPlayer();
 	    	this.numberRoundsWonByComputer = game.getNumberRoundsWonByComputer();
