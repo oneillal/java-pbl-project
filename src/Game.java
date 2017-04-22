@@ -1,4 +1,5 @@
 // instantiable class that implements Player and Computer game stats and features
+// Coded by Jonas Stein (Student ID 16136306)
 
 
 public class Game {
@@ -23,7 +24,7 @@ public class Game {
 	    roundWonByComputer;
 	String[] roundWinner = new String[10];
 	String gameWinner;
-	
+
 	// Instantiate the class setting the following values
 	// PlayerChoice is either EVENS or ODDS
 	public Game(String playerChoice) {
@@ -214,14 +215,14 @@ public class Game {
 			roundWinner[round-1] = "ODDS";
 		}
 
-		// check the number of fingers shwon by the player is an even number
+		// check the number of fingers shown by the player is an even number
 		if(playerFingers % 2 == 0)
 			playerNoEven++;
 		// if not then it's an odd number of fingers
 		else
 			playerNoOdd++;
 
-		// check the number of fingers shwon by the computer is an even number
+		// check the number of fingers shown by the computer is an even number
 		if(compFingers % 2 == 0)
 			computerNoEven++;
 		// if not then it's an odd number of fingers
@@ -237,13 +238,13 @@ public class Game {
 			pBonusPoints++;
 			cBonusPoints++;
 		}
-		// Bonus point for Computer if it showed more fingers
+		// Bonus point for Computer if it showed more fingers (i.e. closer to sum)
 		else if(compFingers > playerFingers){
 			computerScore++;
 			System.out.println("\nThe computer got 1 extra point!");
 			cBonusPoints++;
 		}
-		// Bonus point for Player if it showed more fingers
+		// Bonus point for Player if it showed more fingers (i.e. closer to sum)
 		else if(playerFingers > compFingers) {
 			playerScore++;
 			System.out.println("\nYou got 1 extra point!");
@@ -262,7 +263,7 @@ public class Game {
 				gameWinner = "COMPUTER";
 				gameDraw = false;
 				gameOver = true;
-			} 
+			}
 			// It's a DRAW - One more round
 			else {
 				gameDraw = true;

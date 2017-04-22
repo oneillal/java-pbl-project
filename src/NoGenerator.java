@@ -1,4 +1,6 @@
 // Instantiable class to generate random number to be used by Computer in Morra game
+// Coded by Jonas Stein (Student ID 16136306)
+
 import java.util.Random;
 
 public class NoGenerator {

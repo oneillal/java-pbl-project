@@ -1,5 +1,5 @@
 // instantiable class that interfaces with the user in a game
-
+// Coded by Alan O'Neill (Student ID 16134427)
 
 import java.util.Scanner;
 
@@ -75,7 +75,7 @@ public class Morra {
 
 				System.out.println("Computer[" + compPlayAs  + "]: " + compFingers);
 
-				// computer the choices made by the user and computer in this round
+				// computes the choices made by the user and computer in this round
 				game.turn(yourFingers, compFingers, round);
 
 				// find the round winner
@@ -116,7 +116,7 @@ public class Morra {
 
 
 		// loop stops when exit = true
-		} while (!exit); 
+		} while (!exit);
 
 		// Set game history. MorraApp will need these values to print history of each game
 		this.numberRoundsWonByPlayer = game.getNumberRoundsWonByPlayer();

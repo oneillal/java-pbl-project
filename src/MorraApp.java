@@ -1,6 +1,3 @@
-
-// Main class that interacts with the user when initiating the game
-
 /*
 	JAVA PROJECT - CYBERSECURITY - 2017
 
@@ -11,19 +8,22 @@
 
 */
 
-// input from user 
+// Main class that interacts with the user when initiating the game
+// Coded by Mark Hanlon (Student ID 16135571)
+
+// input from user
 import java.util.Scanner;
 
 public class MorraApp {
 
 	public static void main(String[] args) {
-		
+
 		// get input from users
 		Scanner keyboard = new Scanner(System.in);
 
 		// Creates an array of Morra objects. Up to five games is allowed per run
 		Morra[] morra = new Morra[5];
-		
+
 		System.out.println("\n\t********************************************");
 		System.out.println("\t***** Welcome to Morra Odds and Evens! *****");
 		System.out.println("\t********************************************\n");
@@ -32,7 +32,7 @@ public class MorraApp {
 		int userChoice = 0,
 		// used in the morra array
 		    count      = 0;
-		
+
 		// to set who the player and computer will play as
 		String youPlayAs,
 		       compPlayAs;
@@ -78,7 +78,7 @@ public class MorraApp {
 			// Number of rounds won by player and computer
 			System.out.println("\nNumber of rounds won by you: " + morra[i].numberRoundsWonByPlayer);
 			System.out.println("Number of rounds won by the computer: " + morra[i].numberRoundsWonByComputer);
-			
+
 			// Number of Even numbers shown by player
 			System.out.println("\nNumber of Even numbers shown by you: " + morra[i].playerNumberOfEven);
 			System.out.println("Number of Odds numbers shown by you: " + morra[i].playerNumberOfOdd);
@@ -90,7 +90,7 @@ public class MorraApp {
 			// Number of Bonus points the player and computer received
 			System.out.println("\nNumber of Bonus points you received: " + morra[i].playerBonusPoints);
 			System.out.println("Number of Bonus points the computer received: " + morra[i].compBonusPoints);
-			
+
 			System.out.println("\n");
 		}
 	// close main
